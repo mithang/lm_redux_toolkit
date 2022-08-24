@@ -1,17 +1,19 @@
 
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from './redux/Store';
-import CounterView  from './CounterView';
+import store,{persistor} from './src/redux/Store';
+import MainStackNavigator from './src/navigations/MainStackNavigator';
+import { PersistGate } from 'redux-persist/integration/react';
 const App = () => {
- 
 
   return (
     <Provider store={store}>
-      <CounterView/>
+      <PersistGate persistor={persistor}>
+      <MainStackNavigator />
+      </PersistGate>
     </Provider>
   );
-};
 
+};
 
 export default App;
