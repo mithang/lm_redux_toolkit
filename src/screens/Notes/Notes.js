@@ -1,19 +1,19 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
 const Notes = (props) => {
-  const { DATA, onAddNewNotePress, onItemPress } = props;
+  const { DATA, onAddNewNotePress, onItemPress, isLoading } = props;
 
   const renderNotesList = () => {
     return (
-      <FlatList data={DATA} renderItem={renderNotesItem} keyExtractor={item => item.id} />
+      <FlatList data={DATA} renderItem={renderNotesItem} keyExtractor={item => item._id} />
     );
   }
 
-  const renderNotesItem = ({item}) => {
-    
+  const renderNotesItem = ({ item }) => {
+
     return (
-      <TouchableOpacity onPress={()=>onItemPress(item)}>
+      <TouchableOpacity onPress={() => onItemPress(item)}>
         <View style={styles.itemContainer}>
           <View>
             <Text numberOfLines={1} style={styles.titleStyle}>{item?.title}</Text>
@@ -39,7 +39,9 @@ const Notes = (props) => {
 
   return (
     <View style={styles.container}>
-      {renderNotesList()}
+      {
+        isLoading ? (<ActivityIndicator animating={isLoading} />) : renderNotesList()
+      }
       {renderAddNoteButton()}
     </View>
   )
